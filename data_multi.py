@@ -6,7 +6,17 @@ import numpy as np
 
 
 class Bandit_multi:
+    """
+    Attributes:
+
+    """
     def __init__(self, name, is_shuffle=True, seed=None):
+        """
+
+        :param name:
+        :param is_shuffle:
+        :param seed:
+        """
         # 从OpenML平台获取数据
         if name == 'mnist':
             X, y = fetch_openml('mnist_784', version=1, return_X_y=True)
@@ -53,10 +63,10 @@ class Bandit_multi:
         rwd = np.zeros((self.n_arm,)) # 初始化奖励向量
         rwd[arm] = 1 # 将当前臂的奖励设置为1
         self.cursor += 1 # 将光标移动到下一个样本
-        return X, rwd # 返回特征向量和奖励向量
+        return X, rwd  # 返回特征向量（上下文）和奖励向量
 
     def finish(self):
         return self.cursor == self.size # 判断是否处理完整个数据集
 
     def reset(self):
-        self.cursor = 0 # 将光标重置为0，以重新开始处理数据集
+        self.cursor = 0  # 将光标重置为0，以重新开始处理数据集

@@ -29,3 +29,7 @@ Use python to run train.py for experiments.
 ```bash
   -  python3 train.py --nu 0.00001 --lamdba 0.00001 --dataset mnist
 ```
+
+## 实现原理概述
+![img_1.png](img_1.png)
+![img.png](img.png)

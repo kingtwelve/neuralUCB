@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
+
 class Network(nn.Module):
     def __init__(self, dim, hidden_size=100):
         super(Network, self).__init__()
@@ -13,6 +14,7 @@ class Network(nn.Module):
 
     def forward(self, x):
         return self.fc2(self.activate(self.fc1(x))) # 网络的前向传播
+
 
 class NeuralUCBDiag:
     def __init__(self, dim, lamdba=1, nu=1, hidden=100):
@@ -26,6 +28,7 @@ class NeuralUCBDiag:
 
     def select(self, context):
         tensor = torch.from_numpy(context).float().cuda() # 将上下文转换为张量
+        # mu就是通过神经网络预测得到的当前的上下文对应的各个arm能得到的UCB的值
         mu = self.func(tensor) # 神经网络的输出
         g_list = [] # 梯度列表
         sampled = [] # 样本列表
@@ -69,6 +72,6 @@ class NeuralUCBDiag:
                 tot_loss += loss.item()
                 cnt += 1
                 if cnt >= 1000:
-                    return tot_loss / 1000 # 如果已经训练了1000次，则返回平均损失
+                    return tot_loss / 1000  # 如果已经训练了1000次，则返回平均损失
             if batch_loss / length <= 1e-3:
-                return batch_loss / length # 如果批次损失小于1e-3，则返回平均损失
+                return batch_loss / length  # 如果批次损失小于1e-3，则返回平均损失
